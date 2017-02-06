@@ -106,6 +106,7 @@ const GooglePlacesAutocomplete = React.createClass({
     enableEmptySections: React.PropTypes.bool,
     renderDescription: React.PropTypes.func,
     renderRow: React.PropTypes.func,
+    googleApiUrl: React.PropTypes.string,
   },
 
   getDefaultProps() {
@@ -144,7 +145,8 @@ const GooglePlacesAutocomplete = React.createClass({
       filterReverseGeocodingByTypes: [],
       predefinedPlacesAlwaysVisible: false,
       enableEmptySections: true,
-      listViewDisplayed: 'auto'
+      listViewDisplayed: 'auto',
+      googleApiUrl: 'https://maps.googleapis.com',
     };
   },
 
@@ -356,7 +358,7 @@ const GooglePlacesAutocomplete = React.createClass({
             this.props.onFail();
         }
       };
-      request.open('GET', 'https://maps.googleapis.com/maps/api/place/details/json?' + Qs.stringify({
+      request.open('GET', `${this.props.googleApiUrl}/maps/api/place/details/json?` + Qs.stringify({
         key: this.props.query.key,
         placeid: rowData.place_id,
         language: this.props.query.language,
