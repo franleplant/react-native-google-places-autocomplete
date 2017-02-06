@@ -470,13 +470,13 @@ const GooglePlacesAutocomplete = React.createClass({
       let url = '';
       if (this.props.nearbyPlacesAPI === 'GoogleReverseGeocoding') {
         // your key must be allowed to use Google Maps Geocoding API
-        url = 'https://maps.googleapis.com/maps/api/geocode/json?' + Qs.stringify({
+        url = `${this.props.googleApiUrl}/maps/api/geocode/json?` + Qs.stringify({
           latlng: latitude + ',' + longitude,
           key: this.props.query.key,
           ...this.props.GoogleReverseGeocodingQuery,
         });
       } else {
-        url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?' + Qs.stringify({
+        url = `${this.props.googleApiUrl}/maps/api/place/nearbysearch/json?` + Qs.stringify({
           location: latitude + ',' + longitude,
           key: this.props.query.key,
           ...this.props.GooglePlacesSearchQuery,
@@ -523,7 +523,7 @@ const GooglePlacesAutocomplete = React.createClass({
           // console.warn("google places autocomplete: request could not be completed or has been aborted");
         }
       };
-      request.open('GET', 'https://maps.googleapis.com/maps/api/place/autocomplete/json?&input=' + encodeURIComponent(text) + '&' + Qs.stringify(this.props.query));
+      request.open('GET', `${this.props.googleApiUrl}/maps/api/place/autocomplete/json?&input=` + encodeURIComponent(text) + '&' + Qs.stringify(this.props.query));
       request.send();
     } else {
       this._results = [];
